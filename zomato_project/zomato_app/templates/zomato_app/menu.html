@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Menu</h2>
+<ul>
+    {% for dish in dishes %}
+        <li>{{ dish.dish_name }} - ${{ dish.price }}</li>
+    {% endfor %}
+</ul>
+<h2>Order Status</h2>
+<ul id="order-status-list">
+</ul>
+<script>
+const orderStatusList = document.getElementById('order-status-list');
+const socket = new WebSocket('ws://' + window.location.host + '/ws/order_status/');
+
+socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const listItem = document.createElement('li');
+    listItem.innerText = data.status;
+    orderStatusList.appendChild(listItem);
+};
+</script>
+{% endblock %}
+
+</body>
+</html>

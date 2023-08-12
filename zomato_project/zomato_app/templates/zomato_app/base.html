@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zesty Zomato</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav li {
+            display: inline-block;
+            margin-right: 1rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #ff9900;
+        }
+        main {
+            padding: 2rem;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    /* for add dish and place order form */
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 400px;
+        }
+    
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1>Zesty Zomato</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'add_dish' %}">Add Dish</a></li>
+                <li><a href="{% url 'place_order' %}">Place Order</a></li>
+                <li><a href="{% url 'menu' %}">Menu</a></li>
+                <li><a href="{% url 'order_list' %}">Order List</a></li>
+
+                <!-- Debugging: Check dish.id value -->
+                {% if dish.id %}
+                <li><a href="{% url 'update_dish_availability' dish_id=dish.id %}">Update Availability</a></li>
+                {% else %}
+                    <li>No dish.id provided</li>
+                {% endif %}
+                
+                <!-- Debugging: Check order.id value -->
+                {% if order.id %}
+                    <li><a href="{% url 'update_order_status' order.id %}">Update Order Status</a></li>
+                {% else %}
+                    <li>No order.id provided</li>
+                {% endif %}   
+                
+                <!-- ...  link for chatbot... -->
+                <li><a href="{% url 'chatbot' %}">Chatbot</a></li>
+            </ul>
+        </nav>
+        
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        &copy; {{ year }} Zesty Zomato
+    </footer>
+</body>
+</html>

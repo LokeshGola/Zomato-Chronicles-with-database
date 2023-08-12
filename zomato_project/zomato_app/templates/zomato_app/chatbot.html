@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+{% block content %}
+<h2>Chatbot Assistance</h2>
+<div id="chat-container">
+    <div id="chat-history">
+        <!-- Chat history will be displayed here -->
+    </div>
+    <input type="text" id="user-input" placeholder="Type your question...">
+    <button id="send-button">Send</button>
+</div>
+<script>
+const chatHistory = document.getElementById('chat-history');
+const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-button');
+
+sendButton.addEventListener('click', () => {
+    const userMessage = userInput.value;
+    if (userMessage.trim() !== '') {
+        displayMessage('You', userMessage, 'user');
+        fetchResponse(userMessage);
+        userInput.value = '';
+    }
+});
+
+function displayMessage(sender, message, messageType) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('chat-message', messageType);
+    messageElement.innerText = `${sender}: ${message}`;
+    chatHistory.appendChild(messageElement);
+}
+
+function fetchResponse(userMessage) {
+    // Simulate fetching response from the server
+    setTimeout(() => {
+        const botMessage = getBotResponse(userMessage);
+        displayMessage('Chatbot', botMessage, 'bot');
+    }, 500);
+}
+
+function getBotResponse(userMessage) {
+    // You can replace this logic with more advanced responses based on user input
+    // Replace this logic with actual bot response fetching from the server
+    // For example, you can use AJAX or fetch to send the user message to the server
+    // and receive the bot's response in return.
+    // For now, we'll simulate a few responses based on user input.
+    
+    const greetings = ['Hello!', 'Hi there!', 'Greetings!', 'Hey!'];
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+    const lowerCaseMessage = userMessage.toLowerCase();
+
+    if (lowerCaseMessage.includes('menu')) {
+        return 'Sure, here is the current menu: ...'; // Provide the actual menu information
+    } else if (lowerCaseMessage.includes('order')) {
+        return 'To place an order, you can go to the Place Order page.';
+    } else if (lowerCaseMessage.includes('availability')) {
+        return 'You can check the availability of dishes on the Menu page.';
+    } else if (lowerCaseMessage.includes('status')) {
+        return 'You can view the status of orders on the Order List page.';
+    } else {
+        return `${randomGreeting} I'm here to help! How can I assist you?`;
+    }
+}
+
+</script>
+{% endblock %}
+
+</body>
+</html>
